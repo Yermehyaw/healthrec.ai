@@ -19,4 +19,6 @@ View your app in AI Studio: https://ai.studio/apps/38e2173a-c2eb-47fb-aeaa-7407f
 3. Run the app:
    `npm run dev`
 
-Pitch Deck: https://heave-fact-59444857.figma.site
+
+_NEW ADDITION_
+*Pitch Deck:* https://heave-fact-59444857.figma.site

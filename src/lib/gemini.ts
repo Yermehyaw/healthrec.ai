@@ -6,10 +6,20 @@ export async function analyzePatient(patient: any, inventory: any[]) {
   const inventoryContext = inventory.map(item => `${item.name}: ${item.quantity}`).join(', ');
   const prompt = `
     You are a medical inventory optimization assistant.
-    Given this patient profile: ${JSON.stringify(patient)}
-    And the current ward inventory: ${inventoryContext}
+    Analyze this patient profile:
+    - Name: ${patient.name} (${patient.age}y)
+    - Priority: ${patient.priority}
+    - Diagnosis: ${patient.diagnosis}
+    - Vitals: BP ${patient.vitals.bp}, HR ${patient.vitals.hr}, Temp ${patient.vitals.temp}, SpO2 ${patient.vitals.oxygen}%
+    - Prescriptions: ${patient.prescriptions.map((p: any) => `${p.name} ${p.dosage} ${p.frequency}`).join(', ')}
     
-    Suggest restocking priorities and flag any care risks based on the patient's diagnosis and medications vs available supplies.
+    Current Ward Inventory: ${inventoryContext}
+    
+    TASK:
+    1. Suggest restocking priorities based on this patient's prescriptions vs inventory.
+    2. Flag any care risks (e.g., vital abnormalities or medication shortages).
+    3. Suggest a care path.
+    
     Provide the response in clear, bolded sections. Use professional medical terminology.
   `;
 

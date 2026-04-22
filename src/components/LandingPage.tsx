@@ -1,12 +1,146 @@
-import React from 'react';
-import { motion } from 'motion/react';
-import { Activity, Shield, Zap, ArrowRight, Bluetooth as Tooth, Pill, FlaskConical, ClipboardList } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { 
+  Activity, 
+  Shield, 
+  Zap, 
+  ArrowRight, 
+  Bluetooth as Tooth, 
+  Pill, 
+  FlaskConical, 
+  ClipboardList, 
+  X, 
+  Lock, 
+  Server, 
+  Box, 
+  TrendingUp, 
+  BrainCircuit,
+  Database,
+  History
+} from 'lucide-react';
 
 interface LandingPageProps {
   onStart: () => void;
 }
 
+type ModalType = 'features' | 'security' | 'supply-chain' | null;
+
 export default function LandingPage({ onStart }: LandingPageProps) {
+  const [activeModal, setActiveModal] = useState<ModalType>(null);
+
+  const ModalContent = () => {
+    switch (activeModal) {
+      case 'features':
+        return (
+          <div className="space-y-8">
+            <div className="flex border-b border-slate-100 pb-4">
+              <div className="p-3 bg-blue-500 rounded-2xl text-white mr-4">
+                <BrainCircuit className="w-8 h-8" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold text-slate-900">Advanced Platforms Features</h2>
+                <p className="text-slate-500 text-sm">Empowering healthcare providers with localized intelligence.</p>
+              </div>
+            </div>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100">
+                <h3 className="font-bold text-slate-900 mb-2">Smart EMR Integration</h3>
+                <p className="text-xs text-slate-600 leading-relaxed">Automated patient intake with AI-driven extraction from unstructured notes and legacy Excel imports.</p>
+              </div>
+              <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100">
+                <h3 className="font-bold text-slate-900 mb-2">Intelligent Triage</h3>
+                <p className="text-xs text-slate-600 leading-relaxed">Real-time vital sign analysis used to prioritize patient queues based on clinical severity.</p>
+              </div>
+              <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100">
+                <h3 className="font-bold text-slate-900 mb-2">Predictive Diagnostics</h3>
+                <p className="text-xs text-slate-600 leading-relaxed">Gemini 1.5 Flash analyzes patient profiles to suggest potential inventory needs before clinical confirmation.</p>
+              </div>
+              <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100">
+                <h3 className="font-bold text-slate-900 mb-2">Unified Scheduler</h3>
+                <p className="text-xs text-slate-600 leading-relaxed">Interactive calendar that locks appointments only when required medical inventory is verified in stock.</p>
+              </div>
+            </div>
+          </div>
+        );
+      case 'security':
+        return (
+          <div className="space-y-8">
+            <div className="flex border-b border-slate-100 pb-4">
+              <div className="p-3 bg-emerald-500 rounded-2xl text-white mr-4">
+                <Shield className="w-8 h-8" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold text-slate-900">Privacy & Data Governance</h2>
+                <p className="text-slate-500 text-sm">Security that evolves with modern clinical standards.</p>
+              </div>
+            </div>
+            <div className="space-y-4">
+              <div className="flex gap-4 p-5 bg-emerald-50/50 rounded-3xl border border-emerald-100/50">
+                <Lock className="w-5 h-5 text-emerald-600 shrink-0" />
+                <div>
+                  <h3 className="font-bold text-slate-900 text-sm">End-to-End Encryption</h3>
+                  <p className="text-xs text-slate-600">All patient data is encrypted at rest and in transit via TLS 1.3 and AES-256 protocols.</p>
+                </div>
+              </div>
+              <div className="flex gap-4 p-5 bg-blue-50/50 rounded-3xl border border-blue-100/50">
+                <Database className="w-5 h-5 text-blue-600 shrink-0" />
+                <div>
+                  <h3 className="font-bold text-slate-900 text-sm">HL7 & HIPAA Compliance</h3>
+                  <p className="text-xs text-slate-600">Architected for standard health data interoperability while maintaining strict localized data sovereignty.</p>
+                </div>
+              </div>
+              <div className="flex gap-4 p-5 bg-slate-50 rounded-3xl border border-slate-100">
+                <History className="w-5 h-5 text-slate-600 shrink-0" />
+                <div>
+                  <h3 className="font-bold text-slate-900 text-sm">Immutable Audit Logs</h3>
+                  <p className="text-xs text-slate-600">System-wide event tracking ensures every access request and pharmaceutical movement is recorded.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      case 'supply-chain':
+        return (
+          <div className="space-y-8">
+            <div className="flex border-b border-slate-100 pb-4">
+              <div className="p-3 bg-amber-500 rounded-2xl text-white mr-4">
+                <TrendingUp className="w-8 h-8" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold text-slate-900">Supply Chain Optimization</h2>
+                <p className="text-slate-500 text-sm">Advanced logistics modeling for medical resource stability.</p>
+              </div>
+            </div>
+            <div className="grid gap-4">
+              <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100 flex items-start gap-4">
+                <Server className="w-6 h-6 text-amber-600 shrink-0 mt-1" />
+                <div>
+                  <h3 className="font-bold text-slate-900">Predictive Stockpiling</h3>
+                  <p className="text-xs text-slate-600 leading-relaxed mt-1">Leveraging seasonal health data and clinical intake trends to automate re-order points before shortages occur.</p>
+                </div>
+              </div>
+              <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100 flex items-start gap-4">
+                <Box className="w-6 h-6 text-amber-600 shrink-0 mt-1" />
+                <div>
+                  <h3 className="font-bold text-slate-900">Just-In-Time (JIT) Delivery</h3>
+                  <p className="text-xs text-slate-600 leading-relaxed mt-1">Reducing warehouse overhead by synchronizing inventory arrivals with scheduled clinical procedures.</p>
+                </div>
+              </div>
+              <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100 flex items-start gap-4">
+                <Zap className="w-6 h-6 text-amber-600 shrink-0 mt-1" />
+                <div>
+                  <h3 className="font-bold text-slate-900">Automated Tendering</h3>
+                  <p className="text-xs text-slate-600 leading-relaxed mt-1">AI-assisted supplier evaluation to ensure quality standards and cost-efficiency in procurement.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="relative overflow-hidden bg-white">
       {/* Background blobs */}
@@ -21,9 +155,24 @@ export default function LandingPage({ onStart }: LandingPageProps) {
             <h1 className="text-xl font-bold tracking-tight text-slate-900">healthrec.<span className="text-emerald-600">ai</span></h1>
           </div>
           <nav className="hidden md:flex gap-8 text-sm font-medium text-slate-600">
-            <a href="#" className="hover:text-emerald-600 transition-colors">Features</a>
-            <a href="#" className="hover:text-emerald-600 transition-colors">Security</a>
-            <a href="#" className="hover:text-emerald-600 transition-colors">Supply Chain</a>
+            <button 
+              onClick={() => setActiveModal('features')}
+              className="hover:text-emerald-600 transition-colors cursor-pointer"
+            >
+              Features
+            </button>
+            <button 
+              onClick={() => setActiveModal('security')}
+              className="hover:text-emerald-600 transition-colors cursor-pointer"
+            >
+              Security
+            </button>
+            <button 
+              onClick={() => setActiveModal('supply-chain')}
+              className="hover:text-emerald-600 transition-colors cursor-pointer"
+            >
+              Supply Chain
+            </button>
           </nav>
           <button 
             onClick={onStart}
@@ -61,8 +210,11 @@ export default function LandingPage({ onStart }: LandingPageProps) {
                 Launch Application
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
-              <button className="inline-flex items-center gap-2 bg-slate-50 text-slate-600 px-8 py-4 rounded-2xl text-lg font-bold hover:bg-slate-100 transition-all">
-                Watch Demo
+              <button 
+                onClick={() => setActiveModal('features')}
+                className="inline-flex items-center gap-2 bg-slate-50 text-slate-600 px-8 py-4 rounded-2xl text-lg font-bold hover:bg-slate-100 transition-all"
+              >
+                Learn More
               </button>
             </div>
           </motion.div>
@@ -112,20 +264,57 @@ export default function LandingPage({ onStart }: LandingPageProps) {
               icon={<ClipboardList className="w-6 h-6" />}
               title="Smart EMR"
               desc="Comprehensive patient records with AI-assisted clinical note extraction."
+              onClick={() => setActiveModal('features')}
             />
             <FeatureCard 
               icon={<Activity className="w-6 h-6" />}
               title="Predictive Supply"
               desc="Gemini-powered forecasting for essential medical supplies and medications."
+              onClick={() => setActiveModal('supply-chain')}
             />
             <FeatureCard 
               icon={<Shield className="w-6 h-6" />}
               title="Secure Handling"
               desc="Enterprise-grade encryption for all medical data and patient histories."
+              onClick={() => setActiveModal('security')}
             />
           </div>
         </section>
       </main>
+
+      <AnimatePresence>
+        {activeModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setActiveModal(null)}
+              className="absolute inset-0 bg-slate-900/40 backdrop-blur-md"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative w-full max-w-2xl bg-white rounded-[3rem] p-10 shadow-2xl border border-slate-100"
+            >
+              <button 
+                onClick={() => setActiveModal(null)}
+                className="absolute top-8 right-8 p-3 hover:bg-slate-50 rounded-full text-slate-400 transition-colors"
+              >
+                <X className="w-6 h-6" />
+              </button>
+              <ModalContent />
+              <button 
+                onClick={() => { setActiveModal(null); onStart(); }}
+                className="w-full mt-10 py-5 bg-slate-900 text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-slate-800 transition-all shadow-xl shadow-slate-200"
+              >
+                Access Platform Now
+              </button>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
       
       <footer className="bg-slate-50 py-12">
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6">
@@ -140,13 +329,16 @@ export default function LandingPage({ onStart }: LandingPageProps) {
   );
 }
 
-function FeatureCard({ icon, title, desc }: { icon: React.ReactNode, title: string, desc: string }) {
+function FeatureCard({ icon, title, desc, onClick }: { icon: React.ReactNode, title: string, desc: string, onClick?: () => void }) {
   return (
-    <div className="space-y-4">
-      <div className="p-3 bg-cyan-600 rounded-xl w-fit text-white shadow-lg shadow-cyan-100">
+    <div 
+      className="group space-y-4 cursor-pointer"
+      onClick={onClick}
+    >
+      <div className="p-3 bg-cyan-600 rounded-xl w-fit text-white shadow-lg shadow-cyan-100 group-hover:scale-110 transition-transform">
         {icon}
       </div>
-      <h3 className="text-xl font-bold text-slate-900">{title}</h3>
+      <h3 className="text-xl font-bold text-slate-900 group-hover:text-cyan-600 transition-colors">{title}</h3>
       <p className="text-slate-600 leading-relaxed">{desc}</p>
     </div>
   );

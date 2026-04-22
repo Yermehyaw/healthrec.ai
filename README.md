@@ -21,4 +21,4 @@ View your app in AI Studio: https://ai.studio/apps/38e2173a-c2eb-47fb-aeaa-7407f
 
 _ADDITION_
 
-Pitch Deck Link: https://www.figma.com/make/TqdKigaFfQEpAiA9Jj4piR/HealthRec.ai-Pitch-Deck?t=lqaTmzINsfpBR6AI-1
+Pitch Deck Link: https://heave-fact-59444857.figma.site/

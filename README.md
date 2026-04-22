@@ -1,7 +1,11 @@
 
- 
-<img width="1066" height="705" alt="HealthRecBanner" src="https://github.com/user-attachments/assets/4965e141-b636-484f-bedf-d2ff098f7d5a" />
+<div align="center">
+<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
 
+
+<img width="1200" height="600" alt="Screenshot 2026-04-22 at 16 14 4" src="https://github.com/user-attachments/assets/f85bfb51-48da-417c-910d-d9bf60bb3b53" />
+
+</div
 
 # Run and deploy your AI Studio app
 

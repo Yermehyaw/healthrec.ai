@@ -570,59 +570,86 @@ export default function Dashboard({ onBack }: DashboardProps) {
                   p.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
                   p.diagnosis.toLowerCase().includes(searchTerm.toLowerCase())
                 ).map((p) => (
-                  <motion.div key={p.id} whileHover={{ y: -4 }} className="min-w-[280px] p-5 bg-slate-50/50 rounded-3xl border border-slate-100 flex items-center justify-between group cursor-pointer hover:bg-white hover:border-emerald-200 transition-all hover:shadow-xl hover:shadow-emerald-500/5 shadow-sm" onClick={() => runPatientAnalysis(p)}>
-                    <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <p className="text-sm font-black text-slate-900 group-hover:text-emerald-600 transition-colors">{p.name}</p>
-                        <span className={cn("text-[7px] px-1.5 py-0.5 rounded-full font-black uppercase tracking-tighter", p.priority === 'critical' ? "bg-rose-500 text-white" : p.priority === 'high' ? "bg-amber-500 text-white" : "bg-slate-100 text-slate-500")}>{p.priority}</span>
+                  <motion.div 
+                    key={p.id} 
+                    whileHover={{ y: -4 }} 
+                    className="min-w-[320px] p-5 bg-slate-50/50 rounded-3xl border border-slate-100 flex items-center justify-between group relative overflow-hidden hover:bg-white hover:border-emerald-200 transition-all hover:shadow-xl hover:shadow-emerald-500/5 shadow-sm"
+                  >
+                    {/* Triage indicator background pulse for critical */}
+                    {p.priority === 'critical' && (
+                      <div className="absolute top-0 right-0 p-1">
+                         <div className="w-2 h-2 bg-rose-500 rounded-full animate-ping" />
                       </div>
-                      <p className="text-[9px] text-slate-500 font-bold uppercase tracking-wider mb-1">{p.age}y • {p.diagnosis.split(',')[0]}</p>
+                    )}
+                    
+                    <div className="flex flex-col gap-1 pr-4">
+                      <div className="flex items-center gap-2 mb-1">
+                        <div className={cn(
+                          "w-2.5 h-2.5 rounded-full",
+                          p.priority === 'critical' ? "bg-rose-500 shadow-md shadow-rose-200" :
+                          p.priority === 'high' ? "bg-amber-500 shadow-md shadow-amber-200" :
+                          p.priority === 'medium' ? "bg-blue-500" : "bg-slate-300"
+                        )} />
+                        <p className="text-sm font-black text-slate-900">{p.name}</p>
+                        <span className={cn(
+                          "text-[7px] px-1.5 py-0.5 rounded-lg font-black uppercase tracking-tight",
+                          p.priority === 'critical' ? "bg-rose-50 text-rose-600" : 
+                          p.priority === 'high' ? "bg-amber-50 text-amber-600" : 
+                          "bg-slate-100 text-slate-500"
+                        )}>
+                          {p.priority}
+                        </span>
+                      </div>
+                      <p className="text-[9px] text-slate-500 font-bold uppercase tracking-wider mb-1 leading-tight">{p.age}y • {p.diagnosis.split(',')[0]}</p>
                       <div className="flex gap-2 text-[8px] font-bold text-slate-400">
-                        <span className="bg-slate-100 px-1.5 py-0.5 rounded">BP: {p.vitals.bp}</span>
-                        <span className="bg-slate-100 px-1.5 py-0.5 rounded">HR: {p.vitals.hr}</span>
-                        <span className="bg-slate-100 px-1.5 py-0.5 rounded">Meds: {p.prescriptions.length}</span>
+                        <span className="bg-slate-100 px-1.5 py-0.5 rounded flex items-center gap-1"><Activity className="w-2 h-2"/> {p.vitals.bp}</span>
+                        <span className="bg-slate-100 px-1.5 py-0.5 rounded flex items-center gap-1"><Users className="w-2 h-2"/> {p.prescriptions.length} Meds</span>
                       </div>
                     </div>
-                    <div className="flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-all scale-90 group-hover:scale-100">
-                      <div 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          runPatientAnalysis(p);
-                        }}
-                        className="p-2 bg-white rounded-xl text-emerald-500 shadow-sm border border-slate-100 hover:bg-emerald-50 transition-colors" 
-                        title="AI Analysis"
-                      >
-                         <Sparkles className="w-4 h-4" />
+
+                    <div className="flex flex-col gap-1.5 opacity-0 group-hover:opacity-100 transition-all scale-90 group-hover:scale-100 min-w-[32px]">
+                      {/* Detailed Buttons with Tooltips */}
+                      <div className="relative group/btn">
+                        <div 
+                          onClick={() => runPatientAnalysis(p)}
+                          className="p-2 bg-emerald-500 rounded-xl text-white shadow-lg shadow-emerald-500/20 hover:bg-emerald-600 transition-all cursor-pointer" 
+                        >
+                           <Sparkles className="w-3.5 h-3.5" />
+                        </div>
+                        <span className="absolute right-full mr-2 top-1/2 -translate-y-1/2 px-2 py-1 bg-slate-900 text-white text-[8px] font-black uppercase tracking-widest rounded-lg opacity-0 group-hover/btn:opacity-100 transition-all whitespace-nowrap pointer-events-none">AI INSIGHT</span>
                       </div>
-                      <div 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          openEditForm(p);
-                        }}
-                        className="p-2 bg-white rounded-xl text-blue-500 shadow-sm border border-slate-100 hover:bg-blue-50 transition-colors" 
-                        title="Edit Patient"
-                      >
-                         <FileText className="w-4 h-4" />
+
+                      <div className="relative group/btn">
+                        <div 
+                          onClick={() => openEditForm(p)}
+                          className="p-2 bg-white rounded-xl text-blue-500 shadow-sm border border-slate-100 hover:bg-blue-50 transition-colors cursor-pointer" 
+                        >
+                           <FileText className="w-3.5 h-3.5" />
+                        </div>
+                        <span className="absolute right-full mr-2 top-1/2 -translate-y-1/2 px-2 py-1 bg-slate-900 text-white text-[8px] font-black uppercase tracking-widest rounded-lg opacity-0 group-hover/btn:opacity-100 transition-all whitespace-nowrap pointer-events-none">EDIT RECORD</span>
                       </div>
-                      <div 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setActiveTab('appointments');
-                        }}
-                        className="p-2 bg-white rounded-xl text-slate-400 shadow-sm border border-slate-100 hover:bg-slate-50 hover:text-emerald-500 transition-all" 
-                        title="Schedule Appointment"
-                      >
-                         <Calendar className="w-4 h-4" />
+
+                      <div className="relative group/btn">
+                        <div 
+                          onClick={() => {
+                            setEditingPatientId(p.id); // Context for prefill
+                            setActiveTab('appointments');
+                          }}
+                          className="p-2 bg-white rounded-xl text-slate-400 shadow-sm border border-slate-100 hover:bg-slate-50 hover:text-emerald-500 transition-all cursor-pointer" 
+                        >
+                           <Calendar className="w-3.5 h-3.5" />
+                        </div>
+                        <span className="absolute right-full mr-2 top-1/2 -translate-y-1/2 px-2 py-1 bg-slate-900 text-white text-[8px] font-black uppercase tracking-widest rounded-lg opacity-0 group-hover/btn:opacity-100 transition-all whitespace-nowrap pointer-events-none">SCHEDULE</span>
                       </div>
-                      <div 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          deletePatient(p.id);
-                        }}
-                        className="p-2 bg-white rounded-xl text-rose-400 shadow-sm border border-slate-100 hover:bg-rose-50 hover:text-rose-600 transition-all" 
-                        title="Delete Patient"
-                      >
-                         <Trash2 className="w-4 h-4" />
+
+                      <div className="relative group/btn">
+                        <div 
+                          onClick={() => deletePatient(p.id)}
+                          className="p-2 bg-white rounded-xl text-rose-400 shadow-sm border border-slate-100 hover:bg-rose-50 hover:text-rose-600 transition-all cursor-pointer" 
+                        >
+                           <Trash2 className="w-3.5 h-3.5" />
+                        </div>
+                        <span className="absolute right-full mr-2 top-1/2 -translate-y-1/2 px-2 py-1 bg-slate-900 text-white text-[8px] font-black uppercase tracking-widest rounded-lg opacity-0 group-hover/btn:opacity-100 transition-all whitespace-nowrap pointer-events-none">DISCHARGE</span>
                       </div>
                     </div>
                   </motion.div>

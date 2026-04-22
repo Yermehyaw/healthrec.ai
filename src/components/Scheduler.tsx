@@ -41,6 +41,7 @@ export default function Scheduler({ patients, inventory, appointments, onSchedul
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [selectedPatientId, setSelectedPatientId] = useState<string>(prefillPatient?.id || '');
   const [viewDate, setViewDate] = useState<Date>(new Date());
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const selectedPatient = patients.find(p => p.id === selectedPatientId);
 
@@ -82,8 +83,13 @@ export default function Scheduler({ patients, inventory, appointments, onSchedul
       time: selectedTime,
       status: 'confirmed'
     };
-    onSchedule(newApp);
-    setSelectedTime(null);
+    
+    setShowSuccess(true);
+    setTimeout(() => {
+      onSchedule(newApp);
+      setSelectedTime(null);
+      setShowSuccess(false);
+    }, 1500);
   };
 
   return (
@@ -178,8 +184,43 @@ export default function Scheduler({ patients, inventory, appointments, onSchedul
       </div>
 
       {/* Right: Slots & Patient - col-span-7 */}
-      <div className="lg:col-span-7 flex flex-col gap-6 overflow-hidden">
-        
+      <div className="lg:col-span-7 flex flex-col gap-6 overflow-hidden relative">
+        <AnimatePresence>
+          {showSuccess && (
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.1 }}
+              className="absolute inset-0 z-50 bg-emerald-500/90 backdrop-blur-sm rounded-3xl flex flex-col items-center justify-center text-white p-10 text-center"
+            >
+              <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.2 }}
+                className="w-20 h-20 bg-white rounded-full flex items-center justify-center mb-6 shadow-2xl shadow-emerald-500/50"
+              >
+                <CheckCircle2 className="w-10 h-10 text-emerald-500" />
+              </motion.div>
+              <motion.h3 
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.3 }}
+                className="text-2xl font-black tracking-tighter mb-2"
+              >
+                Appointment Confirmed!
+              </motion.h3>
+              <motion.p
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.4 }}
+                className="text-emerald-50 text-[10px] font-black uppercase tracking-[0.2em]"
+              >
+                Syncing with Clinical Queue...
+              </motion.p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {/* Patient Selection & Status */}
         <div className="glass-card bg-white rounded-3xl p-6 border border-slate-200 custom-shadow">
           <div className="flex gap-6 items-start">

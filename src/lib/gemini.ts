@@ -1,6 +1,17 @@
 import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
+let aiInstance: GoogleGenAI | null = null;
+
+function getAI() {
+  if (!aiInstance) {
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey || apiKey === 'MY_GEMINI_API_KEY') {
+      throw new Error("Missing Gemini API Key. Please add GEMINI_API_KEY to your environment variables or Secrets panel.");
+    }
+    aiInstance = new GoogleGenAI({ apiKey });
+  }
+  return aiInstance;
+}
 
 export async function analyzePatient(patient: any, inventory: any[]) {
   const inventoryContext = inventory.map(item => `${item.name}: ${item.quantity}`).join(', ');
@@ -24,14 +35,15 @@ export async function analyzePatient(patient: any, inventory: any[]) {
   `;
 
   try {
+    const ai = getAI();
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
       contents: [{ parts: [{ text: prompt }] }],
     });
     return response.text || "Unable to generate insights at this time.";
-  } catch (error) {
+  } catch (error: any) {
     console.error("Gemini Error:", error);
-    return "Error connecting to AI diagnostic service.";
+    return `AI Analysis unavailable: ${error.message || "Unknown error"}`;
   }
 }
 
@@ -47,13 +59,14 @@ export async function generateWardReport(patients: any[], inventory: any[]) {
   `;
 
   try {
+    const ai = getAI();
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
       contents: [{ parts: [{ text: prompt }] }],
     });
     return response.text || "Unable to generate ward report.";
-  } catch (error) {
+  } catch (error: any) {
     console.error("Gemini Error:", error);
-    return "Error generating ward report.";
+    return `Ward Report unavailable: ${error.message || "Unknown error"}`;
   }
 }

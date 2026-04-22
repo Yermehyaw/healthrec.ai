@@ -21,7 +21,7 @@ import {
 } from 'lucide-react';
 import * as XLSX from 'xlsx';
 import { cn } from '../lib/utils';
-import { analyzePatient, generateWardReport } from '../lib/gemini';
+import { analyzePatient, generateWardReport, optimizeInventory } from '../lib/gemini';
 import Scheduler from './Scheduler';
 
 interface Prescription {
@@ -229,6 +229,13 @@ export default function Dashboard({ onBack }: DashboardProps) {
   const runWardReport = async () => {
     setReportLoading(true);
     const result = await generateWardReport(patients, inventory);
+    setWardReport(result);
+    setReportLoading(false);
+  };
+
+  const runOptimization = async () => {
+    setReportLoading(true);
+    const result = await optimizeInventory(patients, inventory);
     setWardReport(result);
     setReportLoading(false);
   };
@@ -474,7 +481,13 @@ export default function Dashboard({ onBack }: DashboardProps) {
                   <Zap className="w-4 h-4 text-emerald-500 fill-emerald-500 animate-pulse" />
                   <p className="text-[10px] text-emerald-800 font-bold italic">Gemini is monitoring stock patterns based on scheduled arrivals.</p>
                 </div>
-                <button className="px-4 py-1.5 bg-emerald-600 text-white rounded-lg text-[9px] font-black uppercase tracking-wider hover:bg-emerald-700 transition-all">Optimization Run</button>
+                <button 
+                  onClick={runOptimization}
+                  disabled={reportLoading}
+                  className="px-4 py-1.5 bg-emerald-600 text-white rounded-lg text-[9px] font-black uppercase tracking-wider hover:bg-emerald-700 transition-all disabled:opacity-50"
+                >
+                  {reportLoading ? 'Analyzing...' : 'Optimization Run'}
+                </button>
               </div>
             </section>
 
@@ -605,6 +618,13 @@ export default function Dashboard({ onBack }: DashboardProps) {
                         <span className="bg-slate-100 px-1.5 py-0.5 rounded flex items-center gap-1"><Activity className="w-2 h-2"/> {p.vitals.bp}</span>
                         <span className="bg-slate-100 px-1.5 py-0.5 rounded flex items-center gap-1"><Users className="w-2 h-2"/> {p.prescriptions.length} Meds</span>
                       </div>
+                    </div>
+
+                    {/* "Get insights" hover overlay for the specific AI insight button or general card? 
+                        User asked for "onHover for patient divs which shows 'Get insights'". 
+                        I'll add a floating label that appears over the card. */}
+                    <div className="absolute top-2 left-1/2 -translate-x-1/2 px-3 py-1 bg-emerald-500 text-white text-[8px] font-black uppercase tracking-widest rounded-full opacity-0 group-hover:opacity-100 transition-all -translate-y-2 group-hover:translate-y-0 z-10 pointer-events-none shadow-lg shadow-emerald-500/20">
+                      Get insights
                     </div>
 
                     <div className="flex flex-col gap-1.5 opacity-0 group-hover:opacity-100 transition-all scale-90 group-hover:scale-100 min-w-[32px]">

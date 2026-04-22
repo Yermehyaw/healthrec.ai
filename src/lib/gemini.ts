@@ -70,3 +70,30 @@ export async function generateWardReport(patients: any[], inventory: any[]) {
     return `Ward Report unavailable: ${error.message || "Unknown error"}`;
   }
 }
+
+export async function optimizeInventory(patients: any[], inventory: any[]) {
+  const prompt = `
+    You are a medical supply chain strategist.
+    Current Inventory: ${JSON.stringify(inventory)}
+    Active Patients & Prescriptions: ${JSON.stringify(patients)}
+    
+    TASK:
+    1. Identify critical stock-out risks based on current patient load.
+    2. Propose an optimization strategy (e.g., redistributing supplies or urgent ordering).
+    3. Suggest preventative measures for common high-demand items.
+    
+    Provide a concise, strategic summary with actionable items.
+  `;
+
+  try {
+    const ai = getAI();
+    const response = await ai.models.generateContent({
+      model: "gemini-3-flash-preview",
+      contents: [{ parts: [{ text: prompt }] }],
+    });
+    return response.text || "Unable to generate optimization insights.";
+  } catch (error: any) {
+    console.error("Gemini Error:", error);
+    return `Optimization analysis unavailable: ${error.message || "Unknown error"}`;
+  }
+}

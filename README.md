@@ -18,7 +18,3 @@ View your app in AI Studio: https://ai.studio/apps/38e2173a-c2eb-47fb-aeaa-7407f
 2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
 3. Run the app:
    `npm run dev`
-
-_ADDITION_
-
-Pitch Deck Link: https://heave-fact-59444857.figma.site/

@@ -1,6 +1,6 @@
 
  
-<img width="1066" height="705" alt="Screenshot 2026-04-22 at 16 14 44" src="https://github.com/user-attachments/assets/4965e141-b636-484f-bedf-d2ff098f7d5a" />
+<img width="1066" height="705" alt="HealthRecBanner" src="https://github.com/user-attachments/assets/4965e141-b636-484f-bedf-d2ff098f7d5a" />
 
 
 # Run and deploy your AI Studio app
@@ -20,6 +20,6 @@ View your app in AI Studio: https://ai.studio/apps/38e2173a-c2eb-47fb-aeaa-7407f
 3. Run the app:
    `npm run dev`
 
-_NEW ADDITION_
+## NEW ADDITION
 
 Pitch Deck Link: https://heave-fact-59444857.figma.site

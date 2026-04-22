@@ -87,7 +87,7 @@ export default function Scheduler({ patients, inventory, appointments, onSchedul
   };
 
   return (
-    <div className="grid lg:grid-cols-12 gap-6 h-full p-4 overflow-hidden">
+    <div className="grid lg:grid-cols-12 gap-6 h-full p-4 overflow-y-auto scrollbar-hide">
       
       {/* Left: Calendar - col-span-5 */}
       <div className="lg:col-span-5 glass-card bg-white rounded-3xl p-6 border border-slate-200 custom-shadow flex flex-col">
@@ -138,6 +138,42 @@ export default function Scheduler({ patients, inventory, appointments, onSchedul
               </motion.div>
             );
           })}
+        </div>
+
+        {/* Upcoming Appointments List below Calendar */}
+        <div className="mt-8 pt-8 border-t border-slate-100 flex-1 overflow-hidden flex flex-col min-h-[300px]">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 font-sans leading-none">Upcoming Appointments</h2>
+            <div className="px-2 py-1 bg-emerald-50 rounded-lg">
+               <span className="text-[8px] font-black text-emerald-600">{appointments.length} TOTAL</span>
+            </div>
+          </div>
+          
+          <div className="flex-1 overflow-y-auto scrollbar-hide space-y-2">
+            {appointments.length > 0 ? (
+              [...appointments].reverse().map((app) => (
+                <div key={app.id} className="p-3 bg-slate-50 border border-slate-100 rounded-2xl flex items-center justify-between group hover:bg-white hover:border-emerald-200 transition-all">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-white rounded-xl flex items-center justify-center text-emerald-500 shadow-sm border border-slate-100">
+                      <User className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-black text-slate-900 leading-tight">{app.patientName}</p>
+                      <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">{app.date} • {app.time}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[7px] font-black uppercase tracking-tighter px-1.5 py-0.5 bg-emerald-100 text-emerald-700 rounded-full">{app.status}</span>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="py-8 flex flex-col items-center justify-center gap-2 opacity-30">
+                <CalendarIcon className="w-8 h-8 text-slate-300" />
+                <p className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400">No appointments scheduled</p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

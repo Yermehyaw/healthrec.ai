@@ -1,10 +1,9 @@
 <div align="center">
 <img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
 </div
- X --------------------------- X
-<div align="center">
-<img width="1200" height="475" alt="HealthRec.aiBanner" src="https://drive.google.com/file/d/1_EsGInG9CNAC2qV8hnfvfNz40z0CucfW/view?usp=sharing" />
-</div
+ 
+<img width="1066" height="705" alt="Screenshot 2026-04-22 at 16 14 44" src="https://github.com/user-attachments/assets/4965e141-b636-484f-bedf-d2ff098f7d5a" />
+
 
 # Run and deploy your AI Studio app
 

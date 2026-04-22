@@ -612,11 +612,16 @@ export default function Dashboard({ onBack }: DashboardProps) {
                       <div className="relative group/btn">
                         <div 
                           onClick={() => runPatientAnalysis(p)}
-                          className="p-2 bg-emerald-500 rounded-xl text-white shadow-lg shadow-emerald-500/20 hover:bg-emerald-600 transition-all cursor-pointer" 
+                          className="p-2 bg-emerald-500 rounded-xl text-white shadow-lg shadow-emerald-500/20 hover:bg-emerald-600 transition-all cursor-pointer ring-2 ring-emerald-500/0 hover:ring-emerald-500/50" 
                         >
                            <Sparkles className="w-3.5 h-3.5" />
                         </div>
-                        <span className="absolute right-full mr-2 top-1/2 -translate-y-1/2 px-2 py-1 bg-slate-900 text-white text-[8px] font-black uppercase tracking-widest rounded-lg opacity-0 group-hover/btn:opacity-100 transition-all whitespace-nowrap pointer-events-none">AI INSIGHT</span>
+                        <div className="absolute right-full mr-3 top-1/2 -translate-y-1/2 bg-slate-900 text-white rounded-xl py-2 px-3 opacity-0 invisible group-hover/btn:opacity-100 group-hover/btn:visible transition-all whitespace-nowrap pointer-events-none shadow-2xl z-50 border border-slate-700">
+                          <p className="text-[10px] font-black uppercase tracking-widest text-emerald-400 mb-0.5 flex items-center gap-1">
+                            <Sparkles className="w-2.5 h-2.5" /> AI Insight Engine
+                          </p>
+                          <p className="text-[8px] font-bold text-slate-400 max-w-[120px] leading-tight">Run deep clinical scan for care path & risk detection</p>
+                        </div>
                       </div>
 
                       <div className="relative group/btn">
@@ -626,7 +631,10 @@ export default function Dashboard({ onBack }: DashboardProps) {
                         >
                            <FileText className="w-3.5 h-3.5" />
                         </div>
-                        <span className="absolute right-full mr-2 top-1/2 -translate-y-1/2 px-2 py-1 bg-slate-900 text-white text-[8px] font-black uppercase tracking-widest rounded-lg opacity-0 group-hover/btn:opacity-100 transition-all whitespace-nowrap pointer-events-none">EDIT RECORD</span>
+                        <div className="absolute right-full mr-3 top-1/2 -translate-y-1/2 bg-slate-900 text-white rounded-xl py-2 px-3 opacity-0 invisible group-hover/btn:opacity-100 group-hover/btn:visible transition-all whitespace-nowrap pointer-events-none shadow-2xl z-50 border border-slate-700">
+                          <p className="text-[10px] font-black uppercase tracking-widest text-blue-400 mb-0.5">Edit Record</p>
+                          <p className="text-[8px] font-bold text-slate-400 leading-tight">Update patient demographics & vitals</p>
+                        </div>
                       </div>
 
                       <div className="relative group/btn">
@@ -639,7 +647,10 @@ export default function Dashboard({ onBack }: DashboardProps) {
                         >
                            <Calendar className="w-3.5 h-3.5" />
                         </div>
-                        <span className="absolute right-full mr-2 top-1/2 -translate-y-1/2 px-2 py-1 bg-slate-900 text-white text-[8px] font-black uppercase tracking-widest rounded-lg opacity-0 group-hover/btn:opacity-100 transition-all whitespace-nowrap pointer-events-none">SCHEDULE</span>
+                        <div className="absolute right-full mr-3 top-1/2 -translate-y-1/2 bg-slate-900 text-white rounded-xl py-2 px-3 opacity-0 invisible group-hover/btn:opacity-100 group-hover/btn:visible transition-all whitespace-nowrap pointer-events-none shadow-2xl z-50 border border-slate-700">
+                          <p className="text-[10px] font-black uppercase tracking-widest text-emerald-400 mb-0.5">Scheduler</p>
+                          <p className="text-[8px] font-bold text-slate-400 leading-tight">Plan follow-up & check inventory</p>
+                        </div>
                       </div>
 
                       <div className="relative group/btn">
@@ -649,7 +660,10 @@ export default function Dashboard({ onBack }: DashboardProps) {
                         >
                            <Trash2 className="w-3.5 h-3.5" />
                         </div>
-                        <span className="absolute right-full mr-2 top-1/2 -translate-y-1/2 px-2 py-1 bg-slate-900 text-white text-[8px] font-black uppercase tracking-widest rounded-lg opacity-0 group-hover/btn:opacity-100 transition-all whitespace-nowrap pointer-events-none">DISCHARGE</span>
+                        <div className="absolute right-full mr-3 top-1/2 -translate-y-1/2 bg-slate-900 text-white rounded-xl py-2 px-3 opacity-0 invisible group-hover/btn:opacity-100 group-hover/btn:visible transition-all whitespace-nowrap pointer-events-none shadow-2xl z-50 border border-slate-700">
+                          <p className="text-[10px] font-black uppercase tracking-widest text-rose-400 mb-0.5">Discharge</p>
+                          <p className="text-[8px] font-bold text-slate-400 leading-tight">Remove patient from active clinical queue</p>
+                        </div>
                       </div>
                     </div>
                   </motion.div>

@@ -1,0 +1,6 @@
+{
+  "name": "healthrec.ai",
+  "description": "AI-powered medical records and inventory optimization platform using Gemini 1.5 Flash.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}

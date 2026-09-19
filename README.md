@@ -1,6 +1,6 @@
 ## HEALTH-REC.AI
 
-
+<div align="center">
 
 
 ## Run Locally
@@ -19,3 +19,5 @@
 ## NEW ADDITION
 
 Pitch Deck Link: https://heave-fact-59444857.figma.site
+
+</div>
